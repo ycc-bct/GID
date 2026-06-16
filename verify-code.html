@@ -96,7 +96,7 @@
 
       <div class="cta">
         <button class="btn btn-outline" data-back-url="garage.html">Cancel</button>
-        <button class="btn btn-primary" id="next-btn">Next</button>
+        <button class="btn btn-primary" id="next-btn" data-loading>Next</button>
       </div>
 
     </main>
@@ -160,27 +160,32 @@
     codeInp.addEventListener('input', restoreHint);
 
     document.getElementById('next-btn').addEventListener('click', function () {
+      var btn = this;
       var val = codeInp.value.trim();
 
-      if (val.length < 6) {
-        codeHint.textContent = 'Please enter the 6-digit verification code.';
-        codeHint.style.color = '#C83317';
-        codeInp.classList.add('error');
-        return;
-      }
+      setTimeout(function () {
+        btn.classList.remove('btn-loading');
 
-      // Case 6: verification failure
-      if (sessionStorage.getItem('gid_find_case') === '6') {
-        codeHint.textContent = 'Incorrect code. Please try again.';
-        codeHint.style.color = '#C83317';
-        codeInp.classList.add('error');
-        return;
-      }
+        if (val.length < 6) {
+          codeHint.textContent = 'Please enter the 6-digit verification code.';
+          codeHint.style.color = '#C83317';
+          codeInp.classList.add('error');
+          return;
+        }
 
-      var dest = sessionStorage.getItem('gid_find_case') === '5'
-        ? 'no-products.html'
-        : 'select-products.html';
-      setTimeout(function () { location.href = dest; }, 0);
+        // Case 6: verification failure
+        if (sessionStorage.getItem('gid_find_case') === '6') {
+          codeHint.textContent = 'Incorrect code. Please try again.';
+          codeHint.style.color = '#C83317';
+          codeInp.classList.add('error');
+          return;
+        }
+
+        var dest = sessionStorage.getItem('gid_find_case') === '5'
+          ? 'no-products.html'
+          : 'select-products.html';
+        location.href = dest;
+      }, 1200);
     });
   </script>
 </body>

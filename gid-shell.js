@@ -500,7 +500,7 @@
       var card = btn.closest('.card');
       var inp = card && card.querySelector('input[data-format="serial"], input[data-go]');
       var delay = btn.hasAttribute('data-loading') ? 1200 : 0;
-      setTimeout(function () { gidGo(inp); }, delay);
+      setTimeout(function () { gidGo(inp); btn.classList.remove('btn-loading'); }, delay);
     });
 
     // 清除照片的 X 鈕（先處理，避免又開啟 picker）
