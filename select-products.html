@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Select Products — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+<style>
+  .find-stepper {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; padding: 8px 16px 0; flex-shrink: 0;
+  }
+  .find-step {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #BCBCBC;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Overpass', sans-serif; font-weight: 800;
+    font-size: 14px; color: #fff;
+  }
+  .find-step.active { background: #58626E; }
+  .find-step-arrow { width: 16px; height: 16px; display: flex; align-items: center; }
+
+  .find-card {
+    background: #fff; border-radius: 4px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+    padding: 16px; display: flex; flex-direction: column; gap: 16px;
+    width: 100%; flex-shrink: 0;
+  }
+  .find-card h2 {
+    font-family: 'Overpass', sans-serif; font-weight: 700;
+    font-size: 20px; line-height: 24px; color: #000;
+  }
+
+  .sp-desc {
+    font-family: 'Open Sans', sans-serif; font-weight: 600;
+    font-size: 12px; line-height: 16px; letter-spacing: .02em; color: #000;
+  }
+  .sp-desc strong { font-weight: 700; }
+
+  .sp-error {
+    font-family: 'Open Sans', sans-serif; font-size: 12px;
+    line-height: 16px; color: #C83317; display: none;
+  }
+
+  /* Product list item */
+  .sp-item {
+    border: 1px solid #DEDEE0; border-radius: 6px;
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 15px 13px; cursor: pointer; flex-shrink: 0;
+  }
+
+  /* Custom checkbox */
+  .sp-checkbox {
+    width: 20px; height: 20px; border-radius: 4px;
+    border: 1px solid #DEDEE0; background: #fff;
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+    transition: background .15s, border-color .15s;
+  }
+  .sp-checkbox svg { display: none; }
+  .sp-item.checked .sp-checkbox { background: #0050FC; border-color: #0050FC; }
+  .sp-item.checked .sp-checkbox svg { display: block; }
+
+  /* Product info */
+  .sp-info { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .sp-bike-img {
+    width: 100%; height: 80px; object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+  .sp-name {
+    font-family: 'Overpass', sans-serif; font-weight: 700;
+    font-size: 16px; line-height: 20px; color: #222020;
+  }
+  .sp-serial {
+    font-family: 'Open Sans', sans-serif; font-weight: 400;
+    font-size: 14px; line-height: 20px; color: #58626E;
+  }
+  .sp-date {
+    display: flex; align-items: center; gap: 2px;
+    font-family: 'Open Sans', sans-serif; font-weight: 400;
+    font-size: 14px; line-height: 20px; color: #58626E;
+  }
+</style>
+</head>
+<body>
+
+  <div class="screen" data-nav="garage" data-skeleton>
+
+    <header class="page-head">
+      <div class="chev" role="button" aria-label="back" data-back-url="verify-code.html">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>Find your products</h1>
+        <p>Verify your email to link them to your account</p>
+      </div>
+    </header>
+
+    <main class="content" style="gap:24px;">
+
+      <div class="find-stepper">
+        <div class="find-step">1</div>
+        <div class="find-step-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="find-step">2</div>
+        <div class="find-step-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="find-step active">3</div>
+      </div>
+
+      <div class="find-card">
+        <h2>Select products to link</h2>
+        <p class="sp-desc">These products are registered under <strong id="email-display"></strong>. Choose the ones to add.</p>
+        <p id="sp-error" class="sp-error">Please select at least one product to continue.</p>
+
+        <!-- Product 1 -->
+        <div class="sp-item" id="item-1">
+          <div class="sp-checkbox">
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+              <path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="sp-info">
+            <img class="sp-bike-img" src="img_tcr.png" alt="TCR Advanced 2 Disc-KOM">
+            <div class="sp-name">TCR Advanced 2 Disc-KOM</div>
+            <div class="sp-serial">TCR-ADV2-DISCKOM-2024</div>
+            <div class="sp-date">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6.667" fill="#ABB0B6"/>
+                <path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              2024/05/12
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="sp-item" id="item-2">
+          <div class="sp-checkbox">
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+              <path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="sp-info">
+            <img class="sp-bike-img" src="img_defy.png" alt="Defy Advanced 1">
+            <div class="sp-name">Defy Advanced 1</div>
+            <div class="sp-serial">DEFY-ADV1-2020</div>
+            <div class="sp-date">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6.667" fill="#ABB0B6"/>
+                <path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              2020/01/13
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <footer class="screen-footer">
+      <div class="cta">
+        <button class="btn btn-outline" data-back-url="garage.html">Cancel</button>
+        <button class="btn btn-primary" id="confirm-btn">Confirm</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="gid-shell.js"></script>
+  <script>
+    var PRODUCTS = [
+      {
+        img: 'img_tcr.png',
+        name: 'TCR Advanced 2 Disc-KOM',
+        brand: 'Giant',
+        frameNumber: 'TCR-ADV2-DISCKOM-2024',
+        model: 'TCR Advanced 2 Disc-KOM',
+        type: 'Road Bike',
+        purchaseDate: 'May 12, 2024'
+      },
+      {
+        img: 'img_defy.png',
+        name: 'Defy Advanced 1',
+        brand: 'Giant',
+        frameNumber: 'DEFY-ADV1-2020',
+        model: 'Defy Advanced 1',
+        type: 'Road Bike',
+        purchaseDate: 'January 13, 2020'
+      }
+    ];
+
+    document.getElementById('email-display').textContent = sessionStorage.getItem('gid_verify_email') || '';
+
+    // Case 3: only show one product
+    if (sessionStorage.getItem('gid_find_case') === '3') {
+      document.getElementById('item-2').style.display = 'none';
+    }
+
+    document.querySelectorAll('.sp-item').forEach(function (item) {
+      item.addEventListener('click', function () {
+        item.classList.toggle('checked');
+        if (document.querySelector('.sp-item.checked')) {
+          document.getElementById('sp-error').style.display = 'none';
+        }
+      });
+    });
+
+    document.getElementById('confirm-btn').addEventListener('click', function () {
+      var anyChecked = !!document.querySelector('.sp-item.checked');
+      if (!anyChecked) {
+        document.getElementById('sp-error').style.display = 'block';
+        return;
+      }
+      var selected = [];
+      document.querySelectorAll('.sp-item').forEach(function (item, idx) {
+        if (item.classList.contains('checked')) selected.push(PRODUCTS[idx]);
+      });
+      sessionStorage.setItem('gid_selected_products', JSON.stringify(selected));
+      setTimeout(function () { location.href = 'garage.html?registered=1&toast=1'; }, 0);
+    });
+  </script>
+</body>
+</html>

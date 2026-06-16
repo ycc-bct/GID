@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Garage — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+<style>
+  /* ── Garage header ─────────────────────────────────────── */
+  .garage-head{
+    flex:none;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 16px 12px;
+  }
+  .garage-head h2{
+    font-family:'Overpass',sans-serif;font-weight:700;font-size:20px;line-height:24px;color:#000;
+  }
+  .garage-head p{font-size:14px;line-height:20px;color:#58626E;}
+
+  .add-product-btn{
+    display:flex;align-items:center;gap:4px;
+    padding:10px 14px;
+    background:linear-gradient(#fff,#fff) padding-box,
+               linear-gradient(270deg,#B800AE 0%,#0050FC 100%) border-box;
+    border:2px solid transparent;
+    border-radius:24px;cursor:pointer;
+    box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
+    font-family:'Overpass',sans-serif;font-weight:800;font-size:14px;line-height:16px;
+    text-transform:uppercase;color:#000;
+    flex:none;
+  }
+
+  /* ── White card (stat / bike / quick actions) ──────────── */
+  .g-card{
+    width:100%;flex-shrink:0;
+    background:#fff;
+    box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
+    border-radius:4px;
+    overflow:hidden;
+  }
+
+  /* ── Stat card ─────────────────────────────────────────── */
+  .stat-card{
+    display:flex;align-items:center;justify-content:center;
+    padding:16px;
+  }
+  .stat-block{text-align:center;}
+  .stat-num{
+    display:block;
+    font-family:'Overpass',sans-serif;font-weight:700;font-size:30px;line-height:36px;color:#000;
+  }
+  .stat-lbl{
+    display:block;
+    font-size:12px;line-height:16px;letter-spacing:.02em;color:#58626E;margin-top:2px;
+  }
+
+  /* ── Bike card ─────────────────────────────────────────── */
+  .bike-card-full{padding:16px;display:flex;flex-direction:column;gap:0;}
+  .bike-card-head{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:0 0 8px;
+  }
+  .bike-card-head h3{
+    font-family:'Overpass',sans-serif;font-weight:700;font-size:20px;color:#000;
+  }
+  .carousel-arrows{display:flex;gap:8px;}
+  .carousel-arrows button{
+    width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+    background:none;border:none;cursor:pointer;
+  }
+
+  .bike-img-wrap{
+    display:flex;justify-content:center;align-items:center;
+    padding:20px 0 32px;height:160px;
+  }
+  .bike-img-wrap img{max-height:142px;max-width:100%;mix-blend-mode:multiply;}
+
+  .bike-info{display:flex;flex-direction:column;gap:0;}
+  .bike-name{
+    font-family:'Overpass',sans-serif;font-weight:700;font-size:20px;line-height:24px;color:#000;
+    margin-bottom:4px;
+  }
+  .bike-meta{font-size:12px;line-height:16px;letter-spacing:.02em;color:#58626E;}
+
+  .warranty-row{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:12px;padding-top:12px;border-top:1px solid #F2F2F5;
+  }
+  .warranty-left{display:flex;align-items:center;gap:8px;}
+  .warranty-label{font-size:14px;font-weight:700;color:#000;}
+  .warranty-badge{
+    padding:4px 8px;background:#00A316;border-radius:2px;
+    font-family:'Overpass',sans-serif;font-weight:800;font-size:12px;
+    text-transform:uppercase;color:#fff;line-height:16px;
+  }
+  .warranty-detail{font-size:12px;color:#58626E;margin-top:4px;line-height:16px;}
+
+  .bike-actions{
+    display:flex;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid #F2F2F5;
+  }
+  .bike-actions .btn{flex:1;padding:10px 8px;font-size:12px;}
+
+  /* ── Quick actions card ─────────────────────────────────── */
+  .quick-row{
+    display:flex;align-items:center;gap:12px;
+    padding:16px;
+  }
+  .quick-icon{
+    width:28px;height:28px;border-radius:50%;
+    background:rgba(0,80,252,.10);
+    display:flex;align-items:center;justify-content:center;flex:none;
+  }
+  .quick-text{flex:1;}
+  .quick-text strong{display:block;font-size:14px;font-weight:700;color:#000;line-height:20px;}
+  .quick-text span{font-size:12px;color:#58626E;line-height:16px;}
+
+  /* ── Section heading ─────────────────────────────────────── */
+  .section-head{
+    width:100%;
+    font-family:'Overpass',sans-serif;font-weight:700;font-size:20px;color:#000;
+    padding:0 0 0;
+  }
+
+  /* ── Horizontal scroll cards ─────────────────────────────── */
+  .h-scroll{
+    width:calc(100% + 32px);margin-left:-16px;
+    display:flex;gap:16px;
+    overflow-x:auto;-webkit-overflow-scrolling:touch;
+    padding:0 16px;scrollbar-width:none;
+  }
+  .h-scroll::-webkit-scrollbar{display:none;}
+  .teaser-card{
+    flex:none;width:220px;height:180px;border-radius:4px;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:16px;position:relative;
+  }
+  .teaser-card .tc-labels{display:flex;gap:6px;}
+  .tc-label{
+    background:rgba(255,255,255,.9);
+    padding:4px 8px;border-radius:2px;
+    font-family:'Overpass',sans-serif;font-weight:800;font-size:11px;
+    text-transform:uppercase;color:#000;
+  }
+  .teaser-card .tc-bottom{display:flex;align-items:flex-end;gap:8px;}
+  .teaser-card .tc-text{flex:1;display:flex;flex-direction:column;gap:4px;}
+  .teaser-card .tc-title{
+    font-family:'Overpass',sans-serif;font-weight:700;font-size:18px;line-height:22px;color:#fff;
+  }
+  .teaser-card .tc-arrow{flex:none;display:flex;align-items:center;justify-content:center;}
+  .teaser-card .tc-sub{font-size:12px;color:#fff;opacity:.9;}
+  .teaser-card .tc-sub2{font-size:12px;color:#fff;opacity:.9;}
+
+  /* ── Toast ───────────────────────────────────────────────── */
+  #product-toast {
+    position: fixed;
+    bottom: 104px;
+    left: 16px;
+    right: 16px;
+    z-index: 200;
+    background: #F7F6F7;
+    border: 1px solid #DEDEE0;
+    border-radius: 4px;
+    padding: 12px 24px 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.12);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .3s, transform .3s;
+    pointer-events: none;
+  }
+  #product-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  #product-toast span {
+    font-family: 'Overpass', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: #222020;
+  }
+
+  /* ── Dot indicators ──────────────────────────────────────── */
+  .dots{display:flex;justify-content:center;padding:4px 0;}
+  .dots-pill{
+    display:flex;flex-direction:row;align-items:center;
+    padding:8px 12px;gap:4px;
+    background:rgba(222,222,224,0.6);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-radius:1000px;
+  }
+  .dot{width:3px;height:8px;border-radius:2px;background:#000;}
+  .dot.dim{opacity:0.55;}
+</style>
+</head>
+<body>
+
+  <div class="screen" data-nav="garage">
+
+    <!-- Garage header (similar to page-head but no back arrow) -->
+    <div class="garage-head">
+      <div>
+        <h2>Garage</h2>
+        <p>Manage your registered bicycles</p>
+      </div>
+      <button class="add-product-btn" data-link="add-bike.html">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 3v10M3 8h10" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Add
+      </button>
+    </div>
+
+    <!-- Scrollable content -->
+    <main class="content" style="gap:16px;">
+
+      <!-- Stats card -->
+      <div class="g-card stat-card">
+        <div class="stat-block">
+          <span class="stat-num" id="reg-count">0</span>
+          <span class="stat-lbl">Registered</span>
+        </div>
+      </div>
+
+      <!-- Registered before? inline text (empty state) -->
+      <div id="reg-before-text" style="width:100%;flex-shrink:0;display:none;padding-bottom:24px;border-bottom:1px solid #DEDEE0;cursor:pointer;" data-link="find-products.html">
+        <p style="font-family:'Open Sans',sans-serif;font-weight:600;font-size:12px;line-height:16px;letter-spacing:.02em;color:#000;">Registered before? <span style="color:#0050FC;">Find and link your products.</span></p>
+      </div>
+
+      <!-- Bike 1 card -->
+      <div class="g-card bike-card-full" id="my-bikes-card" style="display:none;">
+
+        <!-- Card header: My Bikes + prev/next -->
+        <div class="bike-card-head">
+          <h3>My Bikes</h3>
+          <div class="carousel-arrows">
+            <button aria-label="prev">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#DEDEE0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button aria-label="next">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#DEDEE0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bike image -->
+        <div class="bike-img-wrap">
+          <img src="img_mybike.png" alt="Leo's Bike">
+        </div>
+
+        <!-- Bike info -->
+        <div class="bike-info">
+          <div class="bike-name">Leo's Bike</div>
+          <div class="bike-meta">Brand: Giant</div>
+          <div class="bike-meta">Frame number: GT123456535</div>
+          <div class="bike-meta">Model: Trance X 29</div>
+          <div class="bike-meta">Type: Mountain Bike</div>
+        </div>
+
+        <!-- Warranty -->
+        <div class="warranty-row">
+          <div>
+            <div class="warranty-left">
+              <!-- Green shield icon -->
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M7 1L2 3v4c0 2.8 2.1 5.4 5 6 2.9-.6 5-3.2 5-6V3L7 1Z" stroke="#00A316" stroke-width="1.2" stroke-linejoin="round"/>
+                <path d="M4.5 7l1.8 1.8L9.5 5.5" stroke="#00A316" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="warranty-label">Warranty</span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 11C8.76142 11 11 8.76142 11 6C11 3.23858 8.76142 1 6 1C3.23858 1 1 3.23858 1 6C1 8.76142 3.23858 11 6 11Z" stroke="#58626E" stroke-width="1.45833" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 4V6" stroke="#58626E" stroke-width="1.45833" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 8H6.005" stroke="#58626E" stroke-width="1.45833" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="warranty-detail">Bike Frame Lifetime Warranty</div>
+            <div class="warranty-detail">Purchase date: March 04, 2022</div>
+          </div>
+          <span class="warranty-badge">Active</span>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="bike-actions">
+          <button class="btn btn-disabled" disabled style="flex:1;">Unlink</button>
+          <button class="btn btn-outline" style="flex:1;">Edit Bike</button>
+          <button class="btn btn-primary" style="flex:1;" id="warranty-btn">Warranty</button>
+        </div>
+
+      </div>
+
+      <!-- Quick actions card (shown when 1+ registered) -->
+      <div class="g-card" id="quick-card" style="display:none;">
+        <div class="quick-row">
+          <div class="quick-icon">
+            <!-- Bike wheels icon -->
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <circle cx="5" cy="13" r="4" stroke="#0050FC" stroke-width="1.5"/>
+              <circle cx="15" cy="13" r="4" stroke="#0050FC" stroke-width="1.5"/>
+              <path d="M5 13l6-8h4l1 8" stroke="#0050FC" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+              <path d="M11 5l5 8" stroke="#0050FC" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="quick-text">
+            <strong>Registered before?</strong>
+            <span>Find and link your products</span>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#58626E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- General Troubleshooting section -->
+      <div style="width:100%;flex-shrink:0;display:flex;flex-direction:column;gap:12px;">
+        <div class="section-head">General Troubleshooting</div>
+        <div class="h-scroll">
+          <div class="teaser-card" style="background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.65) 100%) center/cover,url('img_general_1.png') center/cover no-repeat;">
+            <div class="tc-labels">
+              <span class="tc-label">QUICK FIX</span>
+              <span class="tc-label">ALL BIKE</span>
+            </div>
+            <div class="tc-bottom">
+              <div class="tc-text">
+                <div class="tc-title">Pre-Ride Safety Checks</div>
+                <div class="tc-sub">05 min read</div>
+              </div>
+              <div class="tc-arrow"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M24.6575 17L4 17V15L24.6575 15L17.5325 6H20.0833L28 16L20.0833 26H17.5325L24.6575 17Z" fill="white"/></svg></div>
+            </div>
+          </div>
+          <div class="teaser-card" style="background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.65) 100%) center/cover,url('img_general_2.png') center/cover no-repeat;">
+            <div class="tc-labels">
+              <span class="tc-label">QUICK FIX</span>
+              <span class="tc-label">ALL BIKE</span>
+            </div>
+            <div class="tc-bottom">
+              <div class="tc-text">
+                <div class="tc-title">The Complete Guide to Bike Care</div>
+                <div class="tc-sub">05 min read</div>
+              </div>
+              <div class="tc-arrow"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M24.6575 17L4 17V15L24.6575 15L17.5325 6H20.0833L28 16L20.0833 26H17.5325L24.6575 17Z" fill="white"/></svg></div>
+            </div>
+          </div>
+        </div>
+        <div class="dots">
+          <div class="dots-pill">
+            <div class="dot"></div>
+            <div class="dot dim"></div>
+            <div class="dot dim"></div>
+            <div class="dot dim"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bicycle Manuals section -->
+      <div style="width:100%;flex-shrink:0;display:flex;flex-direction:column;gap:12px;">
+        <div class="section-head">Bicycle Manuals</div>
+        <div class="h-scroll">
+          <div class="teaser-card" style="background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.65) 100%) center/cover,url('img_bicycle_1.png') center/cover no-repeat;">
+            <div class="tc-labels">
+              <span class="tc-label">MANUAL</span>
+              <span class="tc-label">ALL TYPE</span>
+            </div>
+            <div class="tc-bottom">
+              <div class="tc-text">
+                <div class="tc-title">Giant Bicycles Owner's Manual</div>
+                <div class="tc-sub">Shortened Manual</div>
+                <div class="tc-sub2">File Version: V3.0</div>
+              </div>
+              <div class="tc-arrow"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="transform:rotate(90deg)"><path d="M24.6575 17L4 17V15L24.6575 15L17.5325 6H20.0833L28 16L20.0833 26H17.5325L24.6575 17Z" fill="white"/></svg></div>
+            </div>
+          </div>
+          <div class="teaser-card" style="background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.65) 100%) center/cover,url('img_bicycle_2.png') center/cover no-repeat;">
+            <div class="tc-labels">
+              <span class="tc-label">MANUAL</span>
+              <span class="tc-label">ALL TYPE</span>
+            </div>
+            <div class="tc-bottom">
+              <div class="tc-text">
+                <div class="tc-title">Giant TCR Instructions</div>
+                <div class="tc-sub">Official service guide</div>
+              </div>
+              <div class="tc-arrow"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="transform:rotate(90deg)"><path d="M24.6575 17L4 17V15L24.6575 15L17.5325 6H20.0833L28 16L20.0833 26H17.5325L24.6575 17Z" fill="white"/></svg></div>
+            </div>
+          </div>
+        </div>
+        <div class="dots">
+          <div class="dots-pill">
+            <div class="dot"></div>
+            <div class="dot dim"></div>
+            <div class="dot dim"></div>
+            <div class="dot dim"></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Toast: Product linked -->
+    <div id="product-toast">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="6.667" fill="#0050FC"/>
+        <path d="M5.333 8l1.667 1.667L11.333 5.667" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Product linked to your account</span>
+    </div>
+
+    <!-- Bottom navigation (manual, shell removed auto-injection) -->
+    <nav class="nav">
+      <button class="nav-item" data-nav="home">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M7 25L25 25L25 12.7979L24.5547 12.501L16.5547 7.16797L16 6.79785L15.4453 7.16797L7.44531 12.501L7 12.7979L7 25Z" stroke="white" stroke-width="2"/><path d="M13 24V18H19V24" stroke="white" stroke-width="2"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" data-nav="events">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 8H26V26H6V8ZM8 10V24H24V10H8Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M8.5 9V6H10.5V9H8.5Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M21.5 9V6H23.5V9H21.5Z" fill="white"/><path d="M19.2602 20.748C18.7001 20.748 18.2168 20.6481 17.8101 20.4483C17.4035 20.2485 17.0896 19.9685 16.8684 19.6082C16.6508 19.2479 16.542 18.8252 16.542 18.3401C16.542 17.9156 16.6508 17.5482 16.8684 17.2378C17.0896 16.9275 17.3946 16.6867 17.7834 16.5155C17.6336 16.4406 17.4837 16.3335 17.3339 16.1944C17.1877 16.0553 17.0664 15.8859 16.9701 15.6861C16.8773 15.4828 16.8309 15.2473 16.8309 14.9798C16.8309 14.591 16.9272 14.2485 17.1199 13.9524C17.3125 13.6528 17.589 13.4191 17.9493 13.2515C18.3131 13.0838 18.7501 13 19.2602 13C19.7703 13 20.2073 13.0838 20.5711 13.2515C20.9386 13.4191 21.2186 13.6528 21.4112 13.9524C21.6038 14.2485 21.7002 14.591 21.7002 14.9798C21.7002 15.2366 21.6502 15.4667 21.5503 15.67C21.454 15.8698 21.331 16.041 21.1811 16.1837C21.0349 16.3228 20.8868 16.4281 20.737 16.4994C21.1116 16.6635 21.4148 16.9079 21.6467 17.2325C21.8821 17.5535 21.9998 17.9227 21.9998 18.3401C21.9998 18.8252 21.8892 19.2479 21.6681 19.6082C21.4505 19.9685 21.1365 20.2485 20.7263 20.4483C20.3161 20.6481 19.8274 20.748 19.2602 20.748ZM19.2602 19.3835C19.4956 19.3835 19.7043 19.3389 19.8862 19.2497C20.0682 19.157 20.2109 19.0303 20.3143 18.8698C20.4178 18.7093 20.4695 18.5256 20.4695 18.3187C20.4695 18.1047 20.4178 17.9174 20.3143 17.7569C20.2109 17.5963 20.0682 17.4733 19.8862 17.3877C19.7043 17.302 19.4956 17.2592 19.2602 17.2592C19.0176 17.2592 18.8054 17.302 18.6235 17.3877C18.4451 17.4733 18.306 17.5963 18.2061 17.7569C18.1098 17.9174 18.0616 18.1047 18.0616 18.3187C18.0616 18.5256 18.1098 18.7093 18.2061 18.8698C18.306 19.0303 18.4469 19.157 18.6288 19.2497C18.8107 19.3389 19.0212 19.3835 19.2602 19.3835ZM19.2602 15.8841C19.5384 15.8841 19.7614 15.811 19.929 15.6647C20.1003 15.5149 20.1859 15.3258 20.1859 15.0975C20.1859 14.8763 20.1003 14.6926 19.929 14.5464C19.7578 14.4001 19.5349 14.327 19.2602 14.327C18.9713 14.327 18.7465 14.4001 18.586 14.5464C18.4255 14.6926 18.3452 14.8763 18.3452 15.0975C18.3452 15.3258 18.4237 15.5149 18.5806 15.6647C18.7412 15.811 18.9677 15.8841 19.2602 15.8841Z" fill="white"/><path d="M10 20.6195C10 20.0524 10.0642 19.5547 10.1926 19.1267C10.321 18.695 10.4994 18.3151 10.7277 17.9869C10.9596 17.6588 11.2289 17.3716 11.5357 17.1255C11.846 16.8758 12.1778 16.6528 12.5309 16.4566C12.7093 16.3532 12.8787 16.2444 13.0393 16.1302C13.1998 16.0161 13.33 15.8876 13.4299 15.745C13.5333 15.6023 13.585 15.4382 13.585 15.2527C13.585 14.9994 13.503 14.8032 13.3389 14.6641C13.1748 14.5214 12.959 14.4501 12.6915 14.4501C12.4096 14.4501 12.1689 14.5214 11.9691 14.6641C11.7693 14.8032 11.607 14.9994 11.4822 15.2527L10.1177 14.6266C10.3353 14.1237 10.676 13.7277 11.1397 13.4388C11.6035 13.1463 12.1118 13 12.6647 13C13.1784 13 13.6171 13.0999 13.981 13.2996C14.3484 13.4958 14.6267 13.7616 14.8157 14.0969C15.0083 14.4287 15.1047 14.7979 15.1047 15.2045C15.1047 15.6362 15.0315 15.9982 14.8853 16.2907C14.7426 16.5797 14.5464 16.8276 14.2967 17.0345C14.047 17.2414 13.767 17.4376 13.4566 17.6231C13.1249 17.8193 12.8502 17.9941 12.6326 18.1475C12.415 18.3009 12.2384 18.456 12.1029 18.613C11.9709 18.7664 11.8656 18.943 11.7872 19.1427H15.1689V20.6195H10Z" fill="white"/></svg>
+        <span>Events</span>
+      </button>
+      <button class="nav-item" data-nav="discovery">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M11.05 20.95L18.75 18.75L20.95 11.05L13.25 13.25L11.05 20.95ZM16 17.65C15.5417 17.65 15.1521 17.4896 14.8313 17.1687C14.5104 16.8479 14.35 16.4583 14.35 16C14.35 15.5417 14.5104 15.1521 14.8313 14.8313C15.1521 14.5104 15.5417 14.35 16 14.35C16.4583 14.35 16.8479 14.5104 17.1687 14.8313C17.4896 15.1521 17.65 15.5417 17.65 16C17.65 16.4583 17.4896 16.8479 17.1687 17.1687C16.8479 17.4896 16.4583 17.65 16 17.65ZM16 27C14.4783 27 13.0483 26.7113 11.71 26.1337C10.3717 25.5562 9.2075 24.7725 8.2175 23.7825C7.2275 22.7925 6.44375 21.6283 5.86625 20.29C5.28875 18.9517 5 17.5217 5 16C5 14.4783 5.28875 13.0483 5.86625 11.71C6.44375 10.3717 7.2275 9.2075 8.2175 8.2175C9.2075 7.2275 10.3717 6.44375 11.71 5.86625C13.0483 5.28875 14.4783 5 16 5C17.5217 5 18.9517 5.28875 20.29 5.86625C21.6283 6.44375 22.7925 7.2275 23.7825 8.2175C24.7725 9.2075 25.5562 10.3717 26.1337 11.71C26.7113 13.0483 27 14.4783 27 16C27 17.5217 26.7113 18.9517 26.1337 20.29C25.5562 21.6283 24.7725 22.7925 23.7825 23.7825C22.7925 24.7725 21.6283 25.5562 20.29 26.1337C18.9517 26.7113 17.5217 27 16 27ZM16 24.8C18.4383 24.8 20.5146 23.9429 22.2288 22.2288C23.9429 20.5146 24.8 18.4383 24.8 16C24.8 13.5617 23.9429 11.4854 22.2288 9.77125C20.5146 8.05708 18.4383 7.2 16 7.2C13.5617 7.2 11.4854 8.05708 9.77125 9.77125C8.05708 11.4854 7.2 13.5617 7.2 16C7.2 18.4383 8.05708 20.5146 9.77125 22.2288C11.4854 23.9429 13.5617 24.8 16 24.8Z" fill="white"/></svg>
+        <span>Discovery</span>
+      </button>
+      <button class="nav-item active" data-nav="garage">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 24C26.2091 24 28 22.2091 28 20C28 17.7909 26.2091 16 24 16C21.7909 16 20 17.7909 20 20C20 22.2091 21.7909 24 24 24ZM24 26C27.3137 26 30 23.3137 30 20C30 16.6863 27.3137 14 24 14C20.6863 14 18 16.6863 18 20C18 23.3137 20.6863 26 24 26Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M8 24C10.2091 24 12 22.2091 12 20C12 17.7909 10.2091 16 8 16C5.79086 16 4 17.7909 4 20C4 22.2091 5.79086 24 8 24ZM8 26C11.3137 26 14 23.3137 14 20C14 16.6863 11.3137 14 8 14C4.68629 14 2 16.6863 2 20C2 23.3137 4.68629 26 8 26Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M9.63294 6L13.5536 6L13.5519 8H9.6318H6.20069L9.63179 6.00406L9.63294 6ZM17.3387 6.00406L23.8254 6.00406V8H20.5106L21.2768 10.1146L25.2024 19.9321L23.4286 20.9144L20.2351 12.9278L16.0312 21H7.99997V18.6929H15L18.5 12H12L9.99997 15H7.49997L10.5 10H19L17.3387 6.00406Z" fill="white"/></svg>
+        <span>Garage</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script src="gid-shell.js"></script>
+  <script>
+    (function () {
+      var registered = new URLSearchParams(location.search).get('registered') === '1';
+
+      var selectedProducts = [];
+      try {
+        var sp = sessionStorage.getItem('gid_selected_products');
+        if (sp) selectedProducts = JSON.parse(sp);
+      } catch (e) {}
+
+      var count = registered ? (selectedProducts.length > 0 ? selectedProducts.length : 1) : 0;
+      document.getElementById('reg-count').textContent = count;
+
+      var bikeCard = document.getElementById('my-bikes-card');
+      bikeCard.style.display = registered ? '' : 'none';
+
+      document.getElementById('quick-card').style.display = 'none';
+      document.getElementById('reg-before-text').style.display = '';
+      document.getElementById('reg-before-text').addEventListener('click', function () {
+        setTimeout(function () { location.href = 'find-products.html'; }, 0);
+      });
+
+      var toastParam = new URLSearchParams(location.search).get('toast');
+      if (toastParam) {
+        var toast = document.getElementById('product-toast');
+        var toastSpan = toast.querySelector('span');
+        if (toastParam === '2') {
+          toastSpan.textContent = 'Product registered successfully';
+        }
+        setTimeout(function () { toast.classList.add('show'); }, 50);
+        setTimeout(function () { toast.classList.remove('show'); }, 4050);
+      }
+
+      if (!registered) return;
+
+      var imgEl        = document.querySelector('.bike-img-wrap img');
+      var nameEl       = document.querySelector('.bike-name');
+      var metaEls      = document.querySelectorAll('.bike-meta');
+      var warrantyDets = document.querySelectorAll('.warranty-detail');
+      var prevBtn      = document.querySelector('.carousel-arrows button[aria-label="prev"]');
+      var nextBtn      = document.querySelector('.carousel-arrows button[aria-label="next"]');
+      var currentIndex = 0;
+
+      function setArrow(btn, active) {
+        btn.querySelector('path').setAttribute('stroke', active ? '#000' : '#DEDEE0');
+        btn.style.cursor = active ? 'pointer' : 'default';
+      }
+
+      function renderProduct(idx) {
+        var p = selectedProducts[idx];
+        imgEl.src                   = p.img;
+        imgEl.alt                   = p.name;
+        nameEl.textContent          = p.name;
+        metaEls[0].textContent      = 'Brand: ' + p.brand;
+        metaEls[1].textContent      = 'Frame number: ' + p.frameNumber;
+        metaEls[2].textContent      = 'Model: ' + p.model;
+        metaEls[3].textContent      = 'Type: ' + p.type;
+        warrantyDets[1].textContent = 'Purchase date: ' + p.purchaseDate;
+        setArrow(prevBtn, idx > 0);
+        setArrow(nextBtn, idx < selectedProducts.length - 1);
+      }
+
+      if (selectedProducts.length > 0) {
+        renderProduct(0);
+        prevBtn.addEventListener('click', function () {
+          if (currentIndex > 0) { currentIndex--; renderProduct(currentIndex); }
+        });
+        nextBtn.addEventListener('click', function () {
+          if (currentIndex < selectedProducts.length - 1) { currentIndex++; renderProduct(currentIndex); }
+        });
+      } else {
+        var bikeName = localStorage.getItem('gid_bike_name') || "Leo's Bike";
+        nameEl.textContent = bikeName;
+        setArrow(prevBtn, false);
+        setArrow(nextBtn, false);
+      }
+
+      // Warranty button — save current bike then navigate
+      document.getElementById('warranty-btn').addEventListener('click', function () {
+        if (selectedProducts.length > 0) {
+          sessionStorage.setItem('gid_current_bike', JSON.stringify(selectedProducts[currentIndex]));
+        } else {
+          sessionStorage.removeItem('gid_current_bike');
+        }
+        setTimeout(function () { location.href = 'warranty-card.html'; }, 0);
+      });
+    })();
+  </script>
+</body>
+</html>

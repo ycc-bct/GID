@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Warranty Card — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+</head>
+<body>
+
+  <div class="screen" data-nav="garage">
+
+    <header class="page-head">
+      <div class="chev" role="button" aria-label="back" id="warranty-back" data-back-url="garage.html">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>Warranty Card</h1>
+        <p>Check your product warranty coverage</p>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Owner Information -->
+      <div class="card">
+        <h2>Owner Information</h2>
+        <div>
+          <p class="ln">Name: Alex Lee</p>
+          <p class="ln">Mobile number: +1 (555) 123-4567</p>
+          <p class="ln">Email: alex.lee@gmail.com</p>
+          <p class="ln">Address: 3587 Old Conejo Road Newbury Park, CA 91320</p>
+        </div>
+      </div>
+
+      <!-- Leo's Bike -->
+      <div class="card">
+        <h2 id="bike-name-title">Leo's Bike</h2>
+        <img id="warranty-bike-img" class="product-img" src="card-bike.png" alt="Bike">
+        <div>
+          <p class="ln">Purchase date: March 04, 2022</p>
+          <p class="ln">Purchase outlet: outlet name here</p>
+          <p class="ln">Frame number: NXC0021854-88</p>
+          <p class="ln">Product model: 2020082899766</p>
+          <p class="ln">Product name: PROPEL ADVANCED SLDISC TEAM DI2</p>
+          <p class="ln">Brake Configuration: 右把手控制後煞車器</p>
+        </div>
+      </div>
+
+      <!-- Wheel -->
+      <div class="card">
+        <img class="product-img" src="card-wheel.png" alt="Wheel">
+        <div>
+          <p class="ln">Purchase date: March 04, 2022</p>
+          <p class="ln">Purchase outlet: outlet name here</p>
+          <p class="ln">Serial number: CX24949347274</p>
+          <p class="ln">Product model: 2020082899766</p>
+          <p class="ln">Product name: Cadex Ultra 40</p>
+        </div>
+      </div>
+
+      <!-- View your proof of purchase -->
+      <div class="card">
+        <h2>View your proof of purchase</h2>
+        <div class="proof" data-zoom="large_ticket.jpg">
+          <img src="large_ticket.jpg" alt="receipt">
+          <span class="proof-zoom">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#000" stroke-width="1.4"/><path d="M11 11l3.5 3.5" stroke="#000" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="screen-footer">
+      <div class="cta">
+        <button class="btn btn-primary" id="warranty-back-btn">DONE</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="gid-shell.js"></script>
+  <script>
+    (function () {
+      // Try Find Products flow first
+      var currentBike = null;
+      try {
+        var cb = sessionStorage.getItem('gid_current_bike');
+        if (cb) currentBike = JSON.parse(cb);
+      } catch (e) {}
+
+      if (currentBike) {
+        // Update bike name
+        document.getElementById('bike-name-title').textContent = currentBike.name;
+
+        // Update bike image (object-fit so it looks natural)
+        var bikeImg = document.getElementById('warranty-bike-img');
+        bikeImg.src = currentBike.img;
+        bikeImg.style.objectFit = 'contain';
+        bikeImg.style.mixBlendMode = 'multiply';
+
+        // Update .ln fields in the bike card (second .card)
+        var bikeCard = document.querySelectorAll('.card')[1];
+        var lns = bikeCard.querySelectorAll('.ln');
+        lns[0].textContent = 'Purchase date: ' + currentBike.purchaseDate;
+        lns[2].textContent = 'Frame number: ' + currentBike.frameNumber;
+        lns[4].textContent = 'Product name: ' + currentBike.name;
+
+        // Back buttons → registered garage
+        document.getElementById('warranty-back').setAttribute('data-back-url', 'garage.html?registered=1');
+        document.getElementById('warranty-back-btn').addEventListener('click', function () {
+          setTimeout(function () { location.href = 'garage.html?registered=1'; }, 0);
+        });
+      } else {
+        // Add Product flow — use localStorage bike name
+        var name = localStorage.getItem('gid_bike_name');
+        if (name) document.getElementById('bike-name-title').textContent = name;
+
+        // DONE button
+        document.getElementById('warranty-back-btn').addEventListener('click', function () {
+          setTimeout(function () { location.href = 'garage.html?registered=1&toast=2'; }, 0);
+        });
+
+        // Back chevron also goes to garage with toast
+        document.getElementById('warranty-back').setAttribute('data-back-url', 'garage.html?registered=1&toast=2');
+      }
+    })();
+
+    // 若有簽名，加入一張 Signature 卡片
+    document.addEventListener('DOMContentLoaded', function () {
+      var raw; try { raw = localStorage.getItem('gid-signatures'); } catch (_) {}
+      if (!raw) return;
+      var sigs; try { sigs = JSON.parse(raw); } catch (_) { return; }
+      if (!sigs || !sigs.length) return;
+      var content = document.querySelector('.content'); if (!content) return;
+      var card = document.createElement('div'); card.className = 'card';
+      var html = '<h2>Signature</h2>';
+      sigs.forEach(function (s) {
+        html += '<div class="field"><span class="flabel">' + s.label + '</span><img class="sig-img" src="' + s.img + '"></div>';
+      });
+      card.innerHTML = html;
+      content.appendChild(card);
+    });
+  </script>
+</body>
+</html>

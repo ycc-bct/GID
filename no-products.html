@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>No Products Found — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+<style>
+  .find-stepper {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; padding: 8px 16px 0; flex-shrink: 0;
+  }
+  .find-step {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #BCBCBC;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Overpass', sans-serif; font-weight: 800;
+    font-size: 14px; color: #fff;
+  }
+  .find-step.active { background: #58626E; }
+  .find-step-arrow { width: 16px; height: 16px; display: flex; align-items: center; }
+
+  .find-card {
+    background: #fff; border-radius: 4px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+    padding: 32px 16px 24px; display: flex; flex-direction: column;
+    align-items: center; gap: 12px;
+    width: 100%; flex-shrink: 0; text-align: center;
+  }
+
+  .empty-icon {
+    width: 72px; height: 72px; flex-shrink: 0;
+  }
+
+  .np-title {
+    font-family: 'Overpass', sans-serif; font-weight: 700;
+    font-size: 20px; line-height: 24px; color: #000;
+  }
+  .np-desc {
+    font-family: 'Open Sans', sans-serif; font-weight: 400;
+    font-size: 14px; line-height: 20px; color: #58626E;
+    margin-top: 8px;
+  }
+  .np-desc strong { font-weight: 700; color: #000; }
+</style>
+</head>
+<body>
+
+  <div class="screen" data-nav="garage" data-skeleton>
+
+    <header class="page-head">
+      <div class="chev" role="button" aria-label="back" data-back-url="verify-code.html">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>Find your products</h1>
+        <p>Verify your email to link them to your account</p>
+      </div>
+    </header>
+
+    <main class="content" style="gap:24px;">
+
+      <div class="find-stepper">
+        <div class="find-step">1</div>
+        <div class="find-step-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="find-step">2</div>
+        <div class="find-step-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="find-step active">3</div>
+      </div>
+
+      <div class="find-card">
+        <!-- Garage icon -->
+        <svg class="empty-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M24 24C26.2091 24 28 22.2091 28 20C28 17.7909 26.2091 16 24 16C21.7909 16 20 17.7909 20 20C20 22.2091 21.7909 24 24 24ZM24 26C27.3137 26 30 23.3137 30 20C30 16.6863 27.3137 14 24 14C20.6863 14 18 16.6863 18 20C18 23.3137 20.6863 26 24 26Z" fill="#DEDEE0"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M8 24C10.2091 24 12 22.2091 12 20C12 17.7909 10.2091 16 8 16C5.79086 16 4 17.7909 4 20C4 22.2091 5.79086 24 8 24ZM8 26C11.3137 26 14 23.3137 14 20C14 16.6863 11.3137 14 8 14C4.68629 14 2 16.6863 2 20C2 23.3137 4.68629 26 8 26Z" fill="#DEDEE0"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M9.63294 6L13.5536 6L13.5519 8H9.6318H6.20069L9.63179 6.00406L9.63294 6ZM17.3387 6.00406L23.8254 6.00406V8H20.5106L21.2768 10.1146L25.2024 19.9321L23.4286 20.9144L20.2351 12.9278L16.0312 21H7.99997V18.6929H15L18.5 12H12L9.99997 15H7.49997L10.5 10H19L17.3387 6.00406Z" fill="#DEDEE0"/>
+        </svg>
+
+        <p class="np-title">No products found</p>
+        <p class="np-desc">We couldn't find any products registered under <strong id="np-email"></strong>.</p>
+      </div>
+
+    </main>
+
+    <footer class="screen-footer">
+      <div class="cta">
+        <button class="btn btn-outline" id="cancel-btn">Cancel</button>
+        <button class="btn btn-primary" id="try-btn">Change email</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="gid-shell.js"></script>
+  <script>
+    var email = sessionStorage.getItem('gid_verify_email') || '';
+    document.getElementById('np-email').textContent = email;
+
+    document.getElementById('try-btn').addEventListener('click', function () {
+      setTimeout(function () { location.href = 'find-products.html?case=5'; }, 0);
+    });
+
+    document.getElementById('cancel-btn').addEventListener('click', function () {
+      setTimeout(function () { location.href = 'garage.html'; }, 0);
+    });
+  </script>
+</body>
+</html>

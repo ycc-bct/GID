@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Bike added — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+</head>
+<body>
+
+  <div class="screen" data-nav="garage">
+
+    <!-- 頁面標題列 -->
+    <header class="page-head">
+      <div class="chev" role="button" aria-label="back" onclick="location.href='rear-wheel.html'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>Bike added</h1>
+        <p>Customize your product information</p>
+      </div>
+    </header>
+
+    <!-- 可滾動內容 -->
+    <main class="content">
+
+      <!-- Stepper：6 步，第 2 步 active -->
+      <div class="stepper">
+        <div class="step">1</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step active">2</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">3</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">4</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">5</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">6</div>
+      </div>
+
+      <!-- Rear Wheel Found! -->
+      <div class="found-card">
+        <h2>Rear Wheel Found!</h2>
+        <div class="found-grid">
+          <div><div class="lbl">Serial Number</div><div class="val">GT123456535</div></div>
+          <div><div class="lbl">Brand</div><div class="val">Cadex</div></div>
+          <div><div class="lbl">Model</div><div class="val">Ultra 40</div></div>
+          <div><div class="lbl">Type</div><div class="val">For Road Bike</div></div>
+        </div>
+      </div>
+
+      <!-- Personalize My Bike -->
+      <div class="card">
+        <h2>Personalize My Bike</h2>
+
+        <div class="field">
+          <span class="flabel">Personal Bike Name <span class="req">*</span></span>
+          <div class="input"><input type="text" value="" placeholder="e.g., My Road Warrior, Thunder Bolt" inputmode="none" data-required data-req-msg="Personal Bike Name is required" data-go="verify-warranty.html"></div>
+          <p class="helper">Give your bike a personal name that's meaningful to you</p>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Bike Photo (Optional)</span>
+          <button class="upload" type="button">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="7" width="22" height="16" rx="2.5" stroke="#DEDEE0" stroke-width="2.3"/><circle cx="14" cy="15" r="4" stroke="#DEDEE0" stroke-width="2.3"/><path d="M9 7l1.5-2.5h7L19 7" stroke="#DEDEE0" stroke-width="2.3" stroke-linejoin="round"/></svg>
+            <p>Add a photo of your bike<br>PNG, JPG up to 5MB</p>
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- 固定底部按鍵 -->
+    <footer class="screen-footer">
+      <div class="cta">
+        <button class="btn btn-outline" onclick="location.href='add-bike.html'">Cancel</button>
+        <button class="btn btn-primary" data-validate data-go="verify-warranty.html">Next</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="gid-shell.js"></script>
+  <script>
+    window.addEventListener('beforeunload', function () {
+      var inp = document.querySelector('.input input[data-required]');
+      if (inp && inp.value.trim()) localStorage.setItem('gid_bike_name', inp.value.trim());
+    });
+  </script>
+</body>
+</html>

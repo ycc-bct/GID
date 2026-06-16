@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Bike 流程啟動器 — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#0050FC; --magenta:#B800AE; --muted:#58626E; --line:#E2E2E6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Open Sans',sans-serif;background:#cfcfd6;min-height:100vh;}
+
+  .stage{display:flex;justify-content:center;align-items:flex-start;min-height:100vh;padding:32px 24px;}
+  .launcher{display:flex;align-items:flex-start;gap:48px;}
+
+  /* iPhone 機身（內含 iframe）*/
+  .device{
+    position:relative;flex:none;
+    width:425px;padding:16px;background:#1c1c1e;border-radius:64px;
+    box-shadow:0 0 0 2px #2c2c2e, 0 30px 80px rgba(0,0,0,.45);
+  }
+  .device::before,.device::after{content:"";position:absolute;left:-2px;background:#2c2c2e;border-radius:2px 0 0 2px;}
+  .device::before{top:150px;width:3px;height:70px;}
+  .device::after{top:240px;width:3px;height:110px;}
+  .device .btn-power{position:absolute;right:-2px;top:180px;width:3px;height:90px;background:#2c2c2e;border-radius:0 2px 2px 0;}
+  .device iframe{
+    width:393px;height:852px;border:0;border-radius:48px;display:block;background:#F2F2F5;
+  }
+
+  /* 情境卡片面板 */
+  .cases{width:360px;flex:none;}
+  .cases .head{margin-bottom:20px;}
+  .cases .head h1{font-family:'Overpass',sans-serif;font-size:24px;line-height:30px;color:#111;}
+  .cases .head p{font-size:14px;line-height:20px;color:var(--muted);margin-top:4px;}
+
+  .reset{
+    display:inline-flex;align-items:center;gap:6px;margin-bottom:16px;cursor:pointer;
+    font-size:13px;font-weight:700;color:#111;background:none;border:none;padding:0;
+  }
+
+  .case-card{
+    display:flex;gap:12px;align-items:flex-start;
+    width:100%;text-align:left;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);border-radius:16px;
+    padding:14px 16px;margin-bottom:12px;
+    transition:border-color .15s, box-shadow .15s, transform .1s;
+  }
+  .case-card:hover{border-color:#b9c6ff;box-shadow:0 6px 18px rgba(0,0,0,.08);}
+  .case-card:active{transform:scale(.99);}
+  .case-card.active{border-color:var(--blue);box-shadow:0 8px 20px rgba(0,80,252,.18);background:#fff;}
+
+  .case-card .num{
+    flex:none;width:28px;height:28px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Overpass',sans-serif;font-weight:800;font-size:14px;color:#fff;background:var(--muted);
+  }
+  .case-card.active .num{background:var(--blue);}
+  .case-card .txt h3{font-family:'Overpass',sans-serif;font-weight:700;font-size:15px;line-height:20px;color:#111;}
+  .case-card .txt p{font-size:13px;line-height:18px;color:var(--muted);margin-top:3px;}
+
+  .group-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:8px 0 8px 4px;}
+
+  @media (max-width:980px){
+    .launcher{flex-direction:column;align-items:center;gap:32px;}
+    .cases{width:393px;}
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="launcher">
+
+      <!-- 手機（流程顯示在這裡）-->
+      <div class="device">
+        <span class="btn-power"></span>
+        <iframe id="viewer" src="garage.html" title="prototype"></iframe>
+      </div>
+
+      <!-- 情境卡片 -->
+      <div class="cases">
+        <div class="head">
+          <h1>Add Product</h1>
+          <p>點選情境，手機會跳到對應的流程畫面</p>
+        </div>
+
+<p class="group-label">① Add Product — Enter serial number</p>
+
+        <div class="case-card" data-flow="garage.html">
+          <span class="num">1</span>
+          <div class="txt"><h3>可直接註冊</h3><p>車架存在，未被任何 GID 註冊，舊保卡資料庫中也查無資料。</p></div>
+        </div>
+
+        <div class="case-card" data-flow="add-bike.html?case=2">
+          <span class="num">2</span>
+          <div class="txt"><h3>車架已被註冊</h3><p>已有其他 GID 帳號註冊過此車架。</p></div>
+        </div>
+
+        <div class="case-card" data-flow="add-bike.html?case=3">
+          <span class="num">3</span>
+          <div class="txt"><h3>找到舊保卡資料</h3><p>車架存在、未被 GID 註冊，但舊保卡資料庫已有此車架的資料。</p></div>
+        </div>
+
+        <p class="group-label">② Find and link your products — Verify email</p>
+
+        <div class="case-card" data-flow="garage.html">
+          <span class="num">4</span>
+          <div class="txt"><h3>email 驗證成功查到資料</h3><p>email 驗證成功，舊保卡有查到資料</p></div>
+        </div>
+
+        <div class="case-card" data-flow="find-products.html?case=5">
+          <span class="num">5</span>
+          <div class="txt"><h3>email 驗證成功查無資料</h3><p>email 驗證成功，舊保卡沒有查到資料</p></div>
+        </div>
+
+        <div class="case-card" data-flow="find-products.html?case=6">
+          <span class="num">6</span>
+          <div class="txt"><h3>email 驗證失敗</h3><p>email 驗證失敗</p></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const viewer = document.getElementById('viewer');
+    function go(el){
+      const flow = el.getAttribute('data-flow');
+      if (flow) {
+        viewer.src = '';
+        setTimeout(function(){ viewer.src = flow; }, 0);
+      }
+      document.querySelectorAll('.case-card').forEach(c=>c.classList.remove('active'));
+      if(el.classList.contains('case-card')) el.classList.add('active');
+    }
+    document.querySelectorAll('[data-flow]').forEach(el=>{
+      el.addEventListener('click',()=>go(el));
+    });
+
+    // 預設啟動 Card 1
+    const card1 = document.querySelector('.case-card[data-flow="garage.html"]');
+    if (card1) card1.classList.add('active');
+
+    // fit-to-screen：整個啟動器等比縮放塞進視窗
+    const stage = document.querySelector('.stage');
+    const launcher = document.querySelector('.launcher');
+    function fit(){
+      if(window.innerWidth <= 980){ launcher.style.transform=''; stage.style.height=''; return; }
+      launcher.style.transform='none';
+      const w = launcher.offsetWidth, h = launcher.offsetHeight;
+      const pad = 48;
+      const scale = Math.min((window.innerWidth-pad)/w, (window.innerHeight-pad)/h, 1);
+      launcher.style.transformOrigin='top center';
+      launcher.style.transform='scale('+scale+')';
+      stage.style.height=(h*scale)+'px';
+    }
+    window.addEventListener('resize',fit);
+    fit();
+  </script>
+</body>
+</html>

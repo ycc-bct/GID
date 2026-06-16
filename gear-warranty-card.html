@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Warranty Card — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+</head>
+<body>
+
+  <div class="screen" data-nav="garage">
+
+    <header class="page-head">
+      <div class="chev" role="button" aria-label="back" onclick="location.href='add-bike.html'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>Warranty Card</h1>
+        <p>Check your product warranty coverage</p>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Owner Information -->
+      <div class="card">
+        <h2>Owner Information</h2>
+        <div>
+          <p class="ln">Name: Alex Lee</p>
+          <p class="ln">Mobile number: +1 (555) 123-4567</p>
+          <p class="ln">Email: alex.lee@gmail.com</p>
+          <p class="ln">Address: 3587 Old Conejo Road Newbury Park, CA 91320</p>
+        </div>
+      </div>
+
+      <!-- Product (Saddle) -->
+      <div class="card">
+        <img class="product-img" src="card-saddle.png" alt="Saddle">
+        <div>
+          <p class="ln">Purchase date: March 04, 2022</p>
+          <p class="ln">Purchase outlet: outlet name here</p>
+          <p class="ln">Serial number: NXC0021854-88</p>
+          <p class="ln">Product model: 2020082899766</p>
+          <p class="ln">Product name: Amp Saddle</p>
+        </div>
+      </div>
+
+      <!-- View your proof of purchase -->
+      <div class="card">
+        <h2>View your proof of purchase</h2>
+        <div class="proof" data-zoom="large_ticket.jpg">
+          <img src="large_ticket.jpg" alt="receipt">
+          <span class="proof-zoom">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#000" stroke-width="1.4"/><path d="M11 11l3.5 3.5" stroke="#000" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="screen-footer">
+      <div class="cta">
+        <button class="btn btn-primary" onclick="location.href='add-bike.html'">Back</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="gid-shell.js"></script>
+</body>
+</html>

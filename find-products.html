@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Find Your Products — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+<style>
+  .find-stepper {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; padding: 8px 16px 0; flex-shrink: 0;
+  }
+  .find-step {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #BCBCBC;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Overpass', sans-serif; font-weight: 800;
+    font-size: 14px; color: #fff;
+  }
+  .find-step.active { background: #58626E; }
+  .find-step-arrow { width: 16px; height: 16px; display: flex; align-items: center; }
+
+  .find-card {
+    background: #fff; border-radius: 4px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+    padding: 16px; display: flex; flex-direction: column; gap: 16px;
+    width: 100%; flex-shrink: 0;
+  }
+  .find-card h2 {
+    font-family: 'Overpass', sans-serif; font-weight: 700;
+    font-size: 20px; line-height: 24px; color: #000;
+  }
+
+  .fp-field { display: flex; flex-direction: column; gap: 4px; }
+  .fp-label {
+    display: flex; align-items: center; gap: 7px;
+    font-family: 'Open Sans', sans-serif; font-weight: 700;
+    font-size: 14px; line-height: 20px; color: #000;
+  }
+  .fp-label .req { color: #C83317; font-size: 12px; }
+  .fp-input {
+    width: 100%; height: 32px;
+    border: 1px solid #DEDEE0; background: #fff;
+    padding: 0 10px;
+    font-family: 'Open Sans', sans-serif; font-size: 12px;
+    color: #000; outline: none; box-sizing: border-box;
+  }
+  .fp-input:focus { border-color: #0050FC; }
+  .fp-input.error { border-color: #C83317; }
+  .fp-hint { font-family: 'Open Sans', sans-serif; font-size: 12px; line-height: 16px; letter-spacing: .02em; color: #58626E; }
+</style>
+</head>
+<body>
+
+  <div class="screen" data-nav="garage">
+
+    <header class="page-head">
+      <div class="chev" role="button" aria-label="back" data-back-url="garage.html">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>Find your products</h1>
+        <p>Verify your email to link them to your account</p>
+      </div>
+    </header>
+
+    <main class="content" style="gap:24px;">
+
+      <div class="find-stepper">
+        <div class="find-step active">1</div>
+        <div class="find-step-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="find-step">2</div>
+        <div class="find-step-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="find-step">3</div>
+      </div>
+
+      <div class="find-card">
+        <h2>Enter your email</h2>
+        <div class="fp-field">
+          <div class="fp-label">Email <span class="req">*</span></div>
+          <input id="email-input" class="fp-input" type="email" inputmode="email" placeholder="name@email.com" autocomplete="email">
+          <p id="email-hint" class="fp-hint">Enter email which you sign up for bike insurance</p>
+        </div>
+      </div>
+
+      <div class="cta">
+        <button class="btn btn-outline" data-back-url="garage.html">Cancel</button>
+        <button class="btn btn-primary" id="next-btn">Next</button>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="gid-shell.js"></script>
+  <script>
+    // Save case for downstream pages
+    var caseParam = new URLSearchParams(location.search).get('case');
+    if (caseParam) {
+      sessionStorage.setItem('gid_find_case', caseParam);
+    } else {
+      sessionStorage.removeItem('gid_find_case');
+    }
+
+    // Case 3: back → Add Product page
+    if (caseParam === '3') {
+      var chev = document.querySelector('.chev[data-back-url]');
+      if (chev) chev.setAttribute('data-back-url', 'add-bike.html?case=3');
+    }
+
+    window.addEventListener('load', function () {
+      document.getElementById('email-input').focus();
+    });
+
+    var hint = document.getElementById('email-hint');
+    var inp  = document.getElementById('email-input');
+
+    function showHint() {
+      hint.textContent = 'Enter email which you sign up for bike insurance';
+      hint.style.color = '';
+      inp.classList.remove('error');
+    }
+
+    inp.addEventListener('input', showHint);
+
+    document.getElementById('next-btn').addEventListener('click', function () {
+      var val = inp.value.trim();
+
+      if (!val) {
+        hint.textContent = 'Email is required.';
+        hint.style.color = '#C83317';
+        inp.classList.add('error');
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+        hint.textContent = 'Please enter a valid email address.';
+        hint.style.color = '#C83317';
+        inp.classList.add('error');
+        return;
+      }
+
+      sessionStorage.setItem('gid_verify_email', val);
+      setTimeout(function () { location.href = 'verify-code.html'; }, 0);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Verify Warranty — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+</head>
+<body>
+
+  <div class="screen" data-nav="garage">
+
+    <header class="page-head">
+      <div class="chev" role="button" aria-label="back" onclick="location.href='add-bike.html'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>Verify Warranty</h1>
+        <p>Check your product warranty information</p>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Stepper：2 步，第 2 步 active -->
+      <div class="stepper">
+        <div class="step">1</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step active">2</div>
+      </div>
+
+      <!-- Product Found! -->
+      <div class="found-card">
+        <h2>Product Found!</h2>
+        <div class="found-grid">
+          <div><div class="lbl">Product Number</div><div class="val">GT123456535</div></div>
+          <div><div class="lbl">Brand</div><div class="val">Cadex</div></div>
+          <div><div class="lbl">Model</div><div class="val">Trance X 29</div></div>
+          <div><div class="lbl">Type</div><div class="val">xxxx xxx</div></div>
+        </div>
+      </div>
+
+      <!-- Owner information -->
+      <div class="found-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <h2>Owner information</h2>
+          <button type="button" aria-label="edit" style="background:none;border:none;cursor:pointer;padding:0;line-height:0;">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="1" y="1" width="26" height="26" rx="7" stroke="#0050FC" stroke-width="1.2"/><path d="M16.8 8.6l2.6 2.6-7 7H9.8v-2.6l7-7Z" stroke="#0050FC" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="found-grid">
+          <div><div class="lbl">Bike Owner name</div><div class="val">Alex Lee</div></div>
+          <div><div class="lbl">Mobile number</div><div class="val">+1 (555) 123-4567</div></div>
+          <div><div class="lbl">Email</div><div class="val">alex.lee@email.com</div></div>
+          <div><div class="lbl">Address</div><div class="val">3587 Old Conejo Road Newbury Park, CA 91320</div></div>
+        </div>
+      </div>
+
+      <!-- Upload to verify warranty -->
+      <div class="card">
+        <h2>Upload to verify warranty</h2>
+
+        <div class="field">
+          <span class="flabel">Date of Purchase</span>
+          <div class="input"><input type="date" value="" placeholder="e.g., dd/mm/yyy"></div>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Purchase Outlet</span>
+          <div class="input"><input type="text" value="" placeholder="e.g., name of the shop" inputmode="none"></div>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Upload proof of purchase <span class="req">*</span></span>
+          <p class="helper">Please upload a valid receipt, if not it may affect your warranty claim later.</p>
+          <button class="upload" type="button" data-pick="large_ticket.jpg" data-required-file>
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="7" width="22" height="16" rx="2.5" stroke="#DEDEE0" stroke-width="2.3"/><circle cx="14" cy="15" r="4" stroke="#DEDEE0" stroke-width="2.3"/><path d="M9 7l1.5-2.5h7L19 7" stroke="#DEDEE0" stroke-width="2.3" stroke-linejoin="round"/></svg>
+            <p>Add a photo of your receipt<br>PNG, JPG up to 5MB</p>
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="screen-footer">
+      <div class="cta">
+        <button class="btn btn-outline" onclick="location.href='add-bike.html'">Cancel</button>
+        <button class="btn btn-primary" data-validate data-modal="#done-modal">Next</button>
+      </div>
+    </footer>
+
+    <!-- 送出完成對話框 -->
+    <div class="modal" id="done-modal">
+      <div class="modal-backdrop"></div>
+      <div class="modal-card">
+        <p class="modal-title">Thank you for the submission.</p>
+        <p class="modal-body">The e-warranty card will be sent to your email. You can also view warranty card in the app.</p>
+        <div class="cta">
+          <button class="btn btn-outline" onclick="location.href='add-bike.html'">Home</button>
+          <button class="btn btn-primary" onclick="location.href='gear-warranty-card.html'">View Warranty</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="gid-shell.js"></script>
+</body>
+</html>

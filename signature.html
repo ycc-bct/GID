@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Signature for Confirmation — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+</head>
+<body>
+
+  <div class="screen" data-nav="garage">
+
+    <header class="page-head">
+      <div class="chev" role="button" aria-label="back" onclick="location.href='safety-checklist.html'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>Signature for Confirmation</h1>
+        <p>Require yours and retailer's confirmation</p>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Stepper：6 步，第 6 步 active -->
+      <div class="stepper">
+        <div class="step">1</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">2</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">3</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">4</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">5</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step active">6</div>
+      </div>
+
+      <div class="card">
+        <div class="field">
+          <span class="flabel">Your signature for confirmation</span>
+          <div class="sign-pad" data-sig-label="Your signature">Please sign here</div>
+        </div>
+        <div class="field">
+          <span class="flabel">Retailer signature for confirmation</span>
+          <div class="sign-pad" data-sig-label="Retailer signature">Please sign here</div>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="screen-footer">
+      <div class="cta">
+        <button class="btn btn-outline" onclick="location.href='add-bike.html'">Cancel</button>
+        <button class="btn btn-primary" onclick="gidSaveSignatures();document.getElementById('done-modal').classList.add('show')">Submit</button>
+      </div>
+    </footer>
+
+    <!-- 送出完成對話框 -->
+    <div class="modal" id="done-modal">
+      <div class="modal-backdrop"></div>
+      <div class="modal-card">
+        <p class="modal-title">Thank you for the submission.</p>
+        <p class="modal-body">The e-warranty card will be sent to your email. You can also view warranty card in the app.</p>
+        <div class="cta">
+          <button class="btn btn-outline" id="home-btn">Home</button>
+          <button class="btn btn-primary" id="view-warranty-btn">View Warranty</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="gid-shell.js"></script>
+  <script>
+    document.getElementById('home-btn').addEventListener('click', function () {
+      sessionStorage.removeItem('gid_selected_products');
+      setTimeout(function () { location.href = 'garage.html?registered=1&toast=2'; }, 0);
+    });
+    document.getElementById('view-warranty-btn').addEventListener('click', function () {
+      setTimeout(function () { location.href = 'warranty-card.html'; }, 0);
+    });
+  </script>
+</body>
+</html>

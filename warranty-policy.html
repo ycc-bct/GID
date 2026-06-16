@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Warranty Policy — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+</head>
+<body>
+
+  <div class="screen" data-nav="garage">
+
+    <header class="page-head">
+      <div class="chev" role="button" aria-label="back" onclick="location.href='verify-warranty.html'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>Warranty Policy</h1>
+        <p>Please review this information</p>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Stepper：6 步，第 4 步 active -->
+      <div class="stepper">
+        <div class="step">1</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">2</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">3</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step active">4</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">5</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">6</div>
+      </div>
+
+      <!-- 保固規定（可滾動）-->
+      <div class="doc">
+        <h2>保固內容及規定</h2>
+        <h3>捷安特自行車保固</h3>
+        <ol>
+          <li>台灣捷安特目前僅提供在台灣購買且在台灣使用的第一手車主保固。
+            <ul><li>提醒您！為保障您的保固權益，請務必填寫完整品質保證書資料，並於官網查詢個人車籍保固資料，務必確認您的保證卡資料有確實被捷安特授權門市登錄或寄送回捷安特（股）公司進行登錄作業，謝謝。</li></ul>
+          </li>
+          <li>在保固期間內，依照使用者說明書之內容，正常使用下發生損壞且判定為品質問題時，捷安特授權門市將提供完善的售後服務，若非為品質問題時則需酌收零件費用及工資。</li>
+          <li>在保固期間內，品質上有任何瑕疵，根據本說明書所記載的內容，可以免費維修（以下稱保固維修）。保固維修以零件維修或零件更換進行，所更換下來的零件為捷安特(股)公司所有。</li>
+          <li>車架保固年限：
+            <ul>
+              <li>a. 終身保固：車架，除下坡賽專屬車款之車架之外。</li>
+              <li>b. 購買日起 3 年內：下坡賽專屬車款（以 GIANT 官方公告之車款為準）。</li>
+            </ul>
+          </li>
+          <li>非屬保固範圍：人為損壞、自然耗損零件（如輪胎、煞車皮、鏈條等）、未經授權之改裝或維修所致之損壞。</li>
+        </ol>
+        <p>詳細條款以捷安特官方網站公告之最新版本為準。</p>
+      </div>
+
+      <!-- 同意卡片緊接在文件卡下方（24px 間距）-->
+      <div class="agree-card">
+        <label class="agree">
+          <input type="checkbox" data-required-check>
+          <span class="agree-dot"></span>
+          <span>我已閱讀並同意保固規定 <span class="req">*</span></span>
+        </label>
+      </div>
+
+    </main>
+
+    <footer class="screen-footer">
+      <div class="cta">
+        <button class="btn btn-outline" onclick="location.href='add-bike.html'">Cancel</button>
+        <button class="btn btn-primary" data-validate data-go="safety-checklist.html">Next</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="gid-shell.js"></script>
+</body>
+</html>

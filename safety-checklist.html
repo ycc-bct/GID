@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Safety Checklist — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+</head>
+<body>
+
+  <div class="screen" data-nav="garage">
+
+    <header class="page-head">
+      <div class="chev" role="button" aria-label="back" onclick="location.href='warranty-policy.html'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>Safety Checklist</h1>
+        <p>Please review this information</p>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Stepper：6 步，第 5 步 active -->
+      <div class="stepper">
+        <div class="step">1</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">2</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">3</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">4</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step active">5</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">6</div>
+      </div>
+
+      <!-- 安全須知（可滾動）-->
+      <div class="doc">
+        <h2>車款說明及使用須知</h2>
+        <h3>全車系</h3>
+        <ol>
+          <li>保固條款說明</li>
+          <li>外觀檢查（車身烤漆、選購的配件、前後反光片）</li>
+          <li>車身設定（使用者坐墊高度、把手位置）</li>
+          <li>使用說明（煞車注意事項、座椅安全線及快拆、輪胎安全線、胎壓值、前後輪快拆、勾爪使用注意事項）</li>
+          <li>安全檢查（車手及豎桿是否有鬆動、胎壓是否在建議值、前後輪快拆是否有鬆動、坐墊及座椅是否有鬆動、煞車是否正常作動）</li>
+          <li>變速說明（使用方式說明、行進中才可操作變速、檔位不可以大對大及小對小）</li>
+          <li>為確保產品正常使用壽命，車架搭配訓練台使用時，應使用訓練台專屬快拆，確認正確安裝及避免頻繁拆裝。</li>
+        </ol>
+        <p>劇烈高強度訓練可能產生過度磨耗，請務必遵循本保固原則謹慎使用。車架勾爪處之過度磨耗及其衍生之車架損傷，本公司不提供保固服務。</p>
+      </div>
+
+      <!-- 同意卡片緊接在文件卡下方 -->
+      <div class="agree-card">
+        <div class="switch-row">
+          <span class="lab">左把手控制前煞車器</span>
+          <button type="button" class="switch on" role="switch" aria-label="brake side"><span class="knob"></span></button>
+          <span class="lab r">右把手控制前煞車器</span>
+        </div>
+        <label class="agree" style="margin-top:12px;">
+          <input type="checkbox" data-required-check>
+          <span class="agree-dot"></span>
+          <span>我已閱讀並同意自行車交車事項 <span class="req">*</span></span>
+        </label>
+      </div>
+
+    </main>
+
+    <footer class="screen-footer">
+      <div class="cta">
+        <button class="btn btn-outline" onclick="location.href='add-bike.html'">Cancel</button>
+        <button class="btn btn-primary" data-validate data-go="signature.html">Next</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="gid-shell.js"></script>
+</body>
+</html>

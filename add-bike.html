@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Add Bike — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+</head>
+<body>
+
+  <div class="screen" data-nav="garage">
+
+    <!-- 頁面標題列 -->
+    <header class="page-head">
+      <div class="chev" role="button" aria-label="back" data-back-url="garage.html">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>Add Product</h1>
+        <p>Enter your product serial number to get started</p>
+      </div>
+    </header>
+
+    <!-- 可滾動內容 -->
+    <main class="content">
+
+      <!-- Stepper：New bike = 6 步 -->
+      <div class="stepper for-bike">
+        <div class="step active">1</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">2</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">3</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">4</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">5</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">6</div>
+      </div>
+
+      <!-- Stepper：New gear = 2 步 -->
+      <div class="stepper for-gear" style="display:none">
+        <div class="step active">1</div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="step">2</div>
+      </div>
+
+      <!-- Select product -->
+      <div class="card">
+        <h2>Select the product to register</h2>
+        <div class="radio-group" id="product-group">
+          <label class="radio sel" data-product="bike"><span class="dot"></span><span>New bike</span></label>
+          <label class="radio" data-product="gear"><span class="dot"></span><span>New gear</span></label>
+        </div>
+      </div>
+
+      <!-- Which part is it?（僅 New gear 顯示）-->
+      <div class="card for-gear" style="display:none">
+        <h2>Which part is it?</h2>
+        <div class="radio-group" id="part-group" style="flex-wrap:wrap;column-gap:18px;row-gap:8px">
+          <label class="radio sel" data-part="saddle"><span class="dot"></span><span>Saddle</span></label>
+          <label class="radio" data-part="wheels"><span class="dot"></span><span>Wheels</span></label>
+          <label class="radio" data-part="stem"><span class="dot"></span><span>Stem</span></label>
+          <label class="radio" data-part="handlebar"><span class="dot"></span><span>Handlebar</span></label>
+        </div>
+      </div>
+
+      <!-- Serial number -->
+      <div class="card">
+        <h2 id="serial-title">Start with Bike Serial Number</h2>
+        <div class="input">
+          <input type="text" value="" placeholder="2948 2441 3743" inputmode="none" data-go="bike-added.html" data-kb="number" data-format="serial" maxlength="14">
+          <span class="field-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#DEDEE0" stroke-width="1.2"/><path d="M11 11l3 3" stroke="#DEDEE0" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+        <p class="helper" id="serial-helper">Enter any 12-digit number to identify bike for registration</p>
+        <div class="cta">
+          <button class="btn btn-primary" data-lookup>Look Up</button>
+          <button class="btn btn-disabled" disabled>Scan QR</button>
+        </div>
+      </div>
+
+      <!-- Info box -->
+      <div class="infobox">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex:none;margin-top:2px;">
+          <circle cx="9" cy="9" r="8" stroke="#0050FC" stroke-width="1.45"/>
+          <path d="M9 8v4" stroke="#0050FC" stroke-width="1.45" stroke-linecap="round"/>
+          <circle cx="9" cy="5.5" r=".9" fill="#0050FC"/>
+        </svg>
+        <div class="txt">
+          <h3>Where to find your Serial Number</h3>
+          <p id="info-text">Look under the bike where the two pedal cranks meet. The number is stamped into the metal frame.</p>
+        </div>
+      </div>
+
+      <!-- 插圖：New bike = 兩張單車（SVG 向量）-->
+      <div class="bike-card for-bike"><img src="bike-road.svg" alt="Road bike"></div>
+      <div class="bike-card for-bike"><img src="bike-ebike.svg" alt="E-bike"></div>
+
+      <!-- 插圖：New gear = 依部件切換（高解析 PNG）-->
+      <div class="bike-card for-gear" style="display:none"><img id="gear-img" src="gear-saddle.png" alt="Gear"></div>
+
+    </main>
+
+    <!-- Case 3：找到舊保卡資料 -->
+    <div class="modal" id="case3-modal">
+      <div class="modal-backdrop" data-modal-close></div>
+      <div class="modal-card">
+        <p class="modal-title">Found under another account</p>
+        <p class="modal-body">This product was registered under a different email. Verify it to move it to your account.</p>
+        <div class="cta">
+          <button class="btn btn-outline" data-modal-close>Cancel</button>
+          <button class="btn btn-primary" id="case3-verify-btn">Verify</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="gid-shell.js"></script>
+  <script>
+    (function () {
+      var TXT = {
+        bike: {
+          serial: 'Start with Bike Serial Number',
+          helper: 'Enter any 12-digit number to identify bike for registration',
+          info:   'Look under the bike where the two pedal cranks meet. The number is stamped into the metal frame.',
+          case2error: 'This frame is already registered to another account.'
+        },
+        gear: {
+          serial: 'Product Serial Number',
+          helper: 'Enter any 12-digit number to identify the part for registration',
+          case2error: 'This part is already registered to another account.'
+        }
+      };
+      var PART = {
+        saddle:    { img: 'gear-saddle.png', info: 'The QR code/serial number is generally located on the underside of the saddle.' },
+        wheels:    { img: 'gear-wheels.png', info: 'Look for the serial number to be on a sticker placed on the rim bed.' },
+        stem:      { img: 'gear-stem.png',   info: 'The QR code sticker is typically on the stem itself.' },
+        handlebar: { img: 'gear-handlebar.png', info: 'The sticker is usually positioned on the underside or near the clamping area of the handlebar.' }
+      };
+      var mode = 'bike';
+      var part = 'saddle';
+      var demoCase = (function () { var c = new URLSearchParams(location.search).get('case'); return c === '2' ? 2 : c === '3' ? 3 : 1; })();
+
+      function getSerial() { return document.querySelector('.input input[data-format="serial"]'); }
+
+      function applyDemoCase() {
+        var serial = getSerial(); if (!serial) return;
+        if (demoCase === 2) {
+          serial.setAttribute('data-case2-error', TXT[mode].case2error);
+          serial.removeAttribute('data-go');
+          serial.removeAttribute('data-case3-modal');
+        } else if (demoCase === 3) {
+          serial.setAttribute('data-case3-modal', '#case3-modal');
+          serial.removeAttribute('data-go');
+          serial.removeAttribute('data-case2-error');
+        } else {
+          serial.removeAttribute('data-case2-error');
+          serial.removeAttribute('data-case3-modal');
+          serial.setAttribute('data-go', mode === 'gear' ? 'gear-verify.html' : 'bike-added.html');
+        }
+        // 清除殘留的錯誤狀態
+        var h = document.getElementById('serial-helper');
+        if (h) { h.classList.remove('error'); if (h.dataset.default != null) { h.textContent = h.dataset.default; delete h.dataset.default; } }
+        var iw = serial.closest('.input'); if (iw) iw.classList.remove('error');
+      }
+
+      function render() {
+        var gear = mode === 'gear';
+        document.querySelectorAll('.for-bike').forEach(function (el) { el.style.display = gear ? 'none' : ''; });
+        document.querySelectorAll('.for-gear').forEach(function (el) { el.style.display = gear ? '' : 'none'; });
+        document.getElementById('serial-title').textContent  = TXT[mode].serial;
+        var h = document.getElementById('serial-helper');
+        if (h) { h.textContent = TXT[mode].helper; h.classList.remove('error'); delete h.dataset.default; }
+        var s = getSerial(); if (s) s.value = '';
+        if (gear) {
+          document.getElementById('info-text').textContent = PART[part].info;
+          document.getElementById('gear-img').src = PART[part].img;
+        } else {
+          document.getElementById('info-text').textContent = TXT.bike.info;
+        }
+        applyDemoCase();
+      }
+
+      document.querySelectorAll('#product-group .radio').forEach(function (r) {
+        r.addEventListener('click', function () { mode = r.getAttribute('data-product'); render(); });
+      });
+      document.querySelectorAll('#part-group .radio').forEach(function (r) {
+        r.addEventListener('click', function () { part = r.getAttribute('data-part'); render(); });
+      });
+
+      render();
+
+    })();
+
+    // Cases 2 & 3：隱藏 back 按鈕，不允許返回 Garage
+    (function () {
+      var c = new URLSearchParams(location.search).get('case');
+      if (c === '2' || c === '3') {
+        var chev = document.querySelector('.chev[data-back-url]');
+        if (chev) chev.removeAttribute('data-back-url');
+      }
+      // Case 3 Verify button → find-products flow
+      var verifyBtn = document.getElementById('case3-verify-btn');
+      if (verifyBtn) {
+        verifyBtn.addEventListener('click', function () {
+          setTimeout(function () { location.href = 'find-products.html?case=3'; }, 0);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

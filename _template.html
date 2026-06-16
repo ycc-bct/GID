@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>畫面標題 — RideLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Overpass:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="gid-shell.css">
+<!-- 需要這個畫面專屬樣式時，放這裡：
+<style> .my-special{...} </style>
+-->
+</head>
+<body>
+
+  <!-- data-nav 設定底部頁籤：home / events / discovery / garage -->
+  <div class="screen" data-nav="garage">
+
+    <!-- 頁面標題列（返回 + 標題 + 副標）-->
+    <header class="page-head">
+      <div class="chev" role="button" aria-label="back">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>畫面標題</h1>
+        <p>副標說明文字</p>
+      </div>
+    </header>
+
+    <!-- 可滾動內容：把這個畫面的區塊放這裡 -->
+    <main class="content">
+
+      <!-- 可用的共用元件範例：
+        卡片：     <div class="card"><h2>標題</h2> ... </div>
+        radio：    <div class="radio-group"><label class="radio sel"><span class="dot"></span><span>選項</span></label></div>
+        輸入框：   <div class="input"><input value="..."></div>
+        按鈕：     <button class="btn btn-primary">確定</button>
+        提示框：   <div class="infobox"><div class="txt"><h3>標題</h3><p>內文</p></div></div>
+        圖片卡：   <div class="bike-card"><img src="xxx.png"></div>
+      -->
+
+    </main>
+
+  </div>
+
+  <!-- 手機殼 / 狀態列 / 上方bar / 底部導覽 / fit-to-screen 全部由這支自動套上 -->
+  <script src="gid-shell.js"></script>
+</body>
+</html>
