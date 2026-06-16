@@ -444,11 +444,13 @@
     phone.appendChild(kbEl);
 
     // Button loading（capture phase，最先執行）
+    // data-loading 按鈕：延長 cleanup 讓導頁先發生（1800ms）；一般按鈕：600ms
     document.addEventListener('click', function (e) {
       var btn = e.target.closest('.btn-primary, .btn-outline');
       if (!btn || btn.disabled || btn.hasAttribute('disabled') || btn.classList.contains('btn-disabled') || btn.classList.contains('btn-loading')) return;
       btn.classList.add('btn-loading');
-      setTimeout(function () { btn.classList.remove('btn-loading'); }, 600);
+      var delay = btn.hasAttribute('data-loading') ? 1800 : 600;
+      setTimeout(function () { btn.classList.remove('btn-loading'); }, delay);
     }, true);
 
     // 按鍵：pointerdown 阻止失焦（保持 input focus），click 才動作
@@ -497,7 +499,8 @@
       var btn = e.target.closest('[data-lookup]'); if (!btn) return;
       var card = btn.closest('.card');
       var inp = card && card.querySelector('input[data-format="serial"], input[data-go]');
-      gidGo(inp);
+      var delay = btn.hasAttribute('data-loading') ? 1200 : 0;
+      setTimeout(function () { gidGo(inp); }, delay);
     });
 
     // 清除照片的 X 鈕（先處理，避免又開啟 picker）

@@ -163,7 +163,7 @@
     <footer class="screen-footer">
       <div class="cta">
         <button class="btn btn-outline" data-back-url="garage.html">Cancel</button>
-        <button class="btn btn-primary" id="confirm-btn">Confirm</button>
+        <button class="btn btn-primary" id="confirm-btn" data-loading>Confirm</button>
       </div>
     </footer>
 
@@ -209,8 +209,10 @@
     });
 
     document.getElementById('confirm-btn').addEventListener('click', function () {
+      var btn = this;
       var anyChecked = !!document.querySelector('.sp-item.checked');
       if (!anyChecked) {
+        btn.classList.remove('btn-loading');
         document.getElementById('sp-error').style.display = 'block';
         return;
       }
@@ -219,7 +221,7 @@
         if (item.classList.contains('checked')) selected.push(PRODUCTS[idx]);
       });
       sessionStorage.setItem('gid_selected_products', JSON.stringify(selected));
-      setTimeout(function () { location.href = 'garage.html?registered=1&toast=1'; }, 0);
+      setTimeout(function () { location.href = 'garage.html?registered=1&toast=1'; }, 1200);
     });
   </script>
 </body>

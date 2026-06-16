@@ -88,7 +88,7 @@
 
       <div class="cta">
         <button class="btn btn-outline" data-back-url="garage.html">Cancel</button>
-        <button class="btn btn-primary" id="next-btn">Next</button>
+        <button class="btn btn-primary" id="next-btn" data-loading>Next</button>
       </div>
 
     </main>
@@ -127,15 +127,18 @@
     inp.addEventListener('input', showHint);
 
     document.getElementById('next-btn').addEventListener('click', function () {
+      var btn = this;
       var val = inp.value.trim();
 
       if (!val) {
+        btn.classList.remove('btn-loading');
         hint.textContent = 'Email is required.';
         hint.style.color = '#C83317';
         inp.classList.add('error');
         return;
       }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+        btn.classList.remove('btn-loading');
         hint.textContent = 'Please enter a valid email address.';
         hint.style.color = '#C83317';
         inp.classList.add('error');
@@ -143,7 +146,7 @@
       }
 
       sessionStorage.setItem('gid_verify_email', val);
-      setTimeout(function () { location.href = 'verify-code.html'; }, 0);
+      setTimeout(function () { location.href = 'verify-code.html'; }, 1200);
     });
   </script>
 </body>
