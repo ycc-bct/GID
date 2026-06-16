@@ -76,7 +76,7 @@
 
     <main class="content" style="gap:24px;">
 
-      <div class="find-stepper">
+      <div class="find-stepper" id="vc-stepper">
         <div class="find-step">1</div>
         <div class="find-step-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="find-step active">2</div>
@@ -105,8 +105,22 @@
 
   <script src="gid-shell.js"></script>
   <script>
+    // Save case from URL param (when arriving directly, e.g. case=3 skips find-products)
+    var caseParam = new URLSearchParams(location.search).get('case');
+    if (caseParam) sessionStorage.setItem('gid_find_case', caseParam);
+    var findCase = sessionStorage.getItem('gid_find_case');
+
+    // Case 3: 2-step stepper (step 1 active), back to add-bike
+    if (findCase === '3') {
+      var arrow = '<div class="find-step-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+      document.getElementById('vc-stepper').innerHTML =
+        '<div class="find-step active">1</div>' + arrow + '<div class="find-step">2</div>';
+      var chev = document.querySelector('.chev[data-back-url]');
+      if (chev) chev.setAttribute('data-back-url', 'add-bike.html?case=3');
+    }
+
     // 顯示 email
-    var email = sessionStorage.getItem('gid_verify_email') || '';
+    var email = findCase === '3' ? 'dcm*****@gmail.com' : (sessionStorage.getItem('gid_verify_email') || '');
     document.getElementById('email-display').textContent = email;
 
     // autofocus

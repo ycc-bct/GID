@@ -101,7 +101,7 @@
 
     <main class="content" style="gap:24px;">
 
-      <div class="find-stepper">
+      <div class="find-stepper" id="sp-stepper">
         <div class="find-step">1</div>
         <div class="find-step-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="find-step">2</div>
@@ -192,11 +192,17 @@
       }
     ];
 
-    document.getElementById('email-display').textContent = sessionStorage.getItem('gid_verify_email') || '';
+    var spCase = sessionStorage.getItem('gid_find_case');
 
-    // Case 3: only show one product
-    if (sessionStorage.getItem('gid_find_case') === '3') {
+    // Case 3: 2-step stepper (step 2 active), hardcoded email, one product
+    if (spCase === '3') {
+      var arrow = '<div class="find-step-arrow"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BCBCBC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+      document.getElementById('sp-stepper').innerHTML =
+        '<div class="find-step">1</div>' + arrow + '<div class="find-step active">2</div>';
+      document.getElementById('email-display').textContent = 'dcm*****@gmail.com';
       document.getElementById('item-2').style.display = 'none';
+    } else {
+      document.getElementById('email-display').textContent = sessionStorage.getItem('gid_verify_email') || '';
     }
 
     document.querySelectorAll('.sp-item').forEach(function (item) {
